@@ -1,0 +1,15 @@
+- hosts: all
+  become: yes
+  tasks:
+  - name: "apt-get update"
+    apt:
+      update_cache: yes
+      cache_valid_time: 3600
+
+  - name: "install nginx"
+    apt:
+      name: ['nginx']
+      state: latest
+[16:27]
+provisioner "local-exec" {
+    command = "ansible-playbook -u ${azurerm_linux_virtual_machine.main.admin_username} -i '${azurerm_linux_virtual_machine.main.public_ip_address},' --extra-vars "ansible_password=${azurerm_linux_virtual_machine.main.admin_password}" ../Ansible/install.yml "
